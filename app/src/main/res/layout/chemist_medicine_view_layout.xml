@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+
+
+    <!-- Title Of Song-->
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+
+
+    <!-- Rightend Duration -->
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="10"
+        android:layout_marginRight="5dip"
+        android:textSize="15dip"
+        android:textColor="#10bcc9"
+        android:textStyle="bold"/>
+
+
+</RelativeLayout>
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="vertical" android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/icon"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="22px"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="22px"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginLeft="4px"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginRight="10px"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="4px"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:src="@drawable/ic_launcher" >&ndash;&gt;-->
+    <!--&lt;!&ndash;</ImageView>&ndash;&gt;-->
+
+    <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/list_item_forecast_textview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:minHeight="?android:attr/listPreferredItemHeight" />-->
+
+
+    <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/number_of_medicines"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_toRightOf="@id/list_item_forecast_textview"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="10"-->
+    <!--android:minHeight="?android:attr/listPreferredItemHeight" />-->
+
+    <!--</RelativeLayout>-->

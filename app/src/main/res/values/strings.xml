@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Chemists</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_patient_details">PatientDetails</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_prescription_list">PrescriptionList</string>
+
+    <string name="Submit">Submit</string>
+    <string name="prescriptionVIew">Prescription View</string>
+
+
+</resources>
