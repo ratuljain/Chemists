@@ -2,12 +2,15 @@ package com.example.lol.chemists;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +23,10 @@ import java.util.Map;
 
 public class PrescriptionList extends AppCompatActivity {
 
+    private final String LOG_TAG = PrescriptionList.class.getSimpleName();
+    String receivedJSONString;
+    EditText PatientName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +34,46 @@ public class PrescriptionList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
+        usernameWrapper.setHint("Enter Patient's name");
+
+        PatientName = (EditText) findViewById(R.id.username);
+
+        Button buttonOne = (Button) findViewById(R.id.btn);
+        buttonOne.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+
+
+                String name = PatientName.getText().toString();
+                //Do stuff here
+                CallAPI c = new CallAPI();
+                try {
+                    receivedJSONString = c.execute(name).get();
+                    Log.v(LOG_TAG, receivedJSONString);
+                    JSONArray presList = JSON.getListOfAllPrescriptions(receivedJSONString);
+                    Log.v(LOG_TAG, Integer.toString(presList.length()));
+
+                    for (int i = 0; i < presList.length(); i++) {
+                        HashMap<String, Integer> test = JSON.chemistMedicineListHashMap(presList.getJSONObject(i).toString());
+
+                        for (Map.Entry<String, Integer> entry : test.entrySet()) {
+                            String key = entry.getKey();
+                            String value = Integer.toString(entry.getValue());
+                            // do stuff
+                            Log.v(LOG_TAG, key + " - " + value);
+                        }
+                    }
+                } catch (Exception ei) {
+                    ei.printStackTrace();
+                }
+
             }
         });
     }
 
     private class CallAPI extends AsyncTask<String, String, String> {
 
-        private final String LOG_TAG = CallAPI.class.getSimpleName();
+//        private final String LOG_TAG = CallAPI.class.getSimpleName();
 
 
         @Override
@@ -51,7 +85,7 @@ public class PrescriptionList extends AppCompatActivity {
 
             try {
 
-                String ip = "http://104.131.46.2:5000/Prescription/api/v1.0/prescription/" + params[0].trim();
+                String ip = "http://104.131.46.2:5000/Prescription/api/v1.0/prescription/all/" + params[0].trim();
 //                String ip = "http://10.0.3.2:5000/Prescription/api/v1.0/prescription/" + params[0].trim();
 
                 URL url = new URL(ip);
@@ -85,20 +119,11 @@ public class PrescriptionList extends AppCompatActivity {
 
                 patientDetails = buffer.toString();
 
-                Log.v(LOG_TAG, (patientDetails));
-
-                HashMap<String, Integer> test = JSON.chemistMedicineListHashMap(patientDetails);
-
-                for (Map.Entry<String,Integer> entry : test.entrySet()) {
-                    String key = entry.getKey();
-                    String value = Integer.toString(entry.getValue());
-                    // do stuff
-                    Log.v(LOG_TAG, key + " - " + value );
-                }
+                Log.v(LOG_TAG, patientDetails);
 
             } catch (Exception e) {
 
-                System.out.println(e.getMessage());
+                Log.e(LOG_TAG, e.getMessage());
 
                 return e.getMessage();
 

@@ -1,5 +1,6 @@
 package com.example.lol.chemists;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +17,7 @@ public class JSON {
     final static String PATIENT_ID = "patient_id";
     final static String PRESCRIPTION = "prescription";
     final static String TIMESTAMP = "timestamp";
+    final static String DOCTORNAME = "Doctor_Name";
 
     /**
      * Gets the actual JSON you have to process on. Use this on the response
@@ -29,15 +31,36 @@ public class JSON {
 
         JSONObject JSONtoProcess = new JSONObject(JSONResponse);
 
-        return JSONtoProcess.getJSONObject(GETACTUALJSON);
+        try {
+            JSONtoProcess = JSONtoProcess.getJSONObject(GETACTUALJSON);
+        } catch (Exception e) {
+            return JSONtoProcess;
+        }
+
+        return JSONtoProcess;
 
     }
+
+    public static JSONArray getListOfAllPrescriptions(String JSONResponse)
+            throws JSONException {
+
+        JSONObject actualPresData = new JSONObject(JSONResponse);
+        JSONArray presList = actualPresData.getJSONArray(GETACTUALJSON);
+
+        return presList;
+    }
+
+    // for parsing list of prescriptions from api
+    // Prescription/api/v1.0/prescription/3
 
     public static HashMap<String, JSONObject> returnMapofMedicine(
             String JSONResponse) throws JSONException {
 
-        JSONObject actualJSON = getActualPrescription(JSONResponse);
-        // System.out.println(actualJSON.toString());
+        JSONObject actualJSON;
+
+
+        actualJSON = getActualPrescription(JSONResponse);
+
         String prescriptionJSON = actualJSON.getString(PRESCRIPTION);
         JSONObject prescription = new JSONObject(prescriptionJSON);
 
@@ -48,11 +71,21 @@ public class JSON {
         return mapOfMedicineKey;
     }
 
-    public static ArrayList<String> returnListofMedicineNames(String JSONResponse)
+
+    public static List<String> returnListofMedicineNames(String JSONResponse)
             throws JSONException {
 
-        HashMap<String, JSONObject> MapofMedicine = returnMapofMedicine(JSONResponse);
-        ArrayList<String> medicineNames = new ArrayList<>();
+        HashMap<String, JSONObject> MapofMedicine;
+
+        // try catch to handle if the json is from api all prescriptions or only
+        // latest prescriptions
+
+        // try{
+        MapofMedicine = returnMapofMedicine(JSONResponse);
+        // }catch(Exception e){
+        // MapofMedicine = returnMapofMedicineAlternate(JSONResponse);
+        // }
+        List<String> medicineNames = new ArrayList<>();
         medicineNames.addAll(MapofMedicine.keySet());
 
         return medicineNames;
@@ -82,7 +115,8 @@ public class JSON {
 
         for (Entry<String, JSONObject> entry : MapofMedicine.entrySet()) {
 
-            mapViewChemist.put(entry.getKey(), extractQuantityfromMedicine(entry.getValue()));
+            mapViewChemist.put(entry.getKey(),
+                    extractQuantityfromMedicine(entry.getValue()));
         }
 
         return mapViewChemist;
@@ -90,8 +124,6 @@ public class JSON {
 
     public static int retreiveTOTAL_QUANTITY(String JSONResponse)
             throws JSONException {
-
-
 
         return 0;
     }
@@ -140,5 +172,16 @@ public class JSON {
         }
 
         return map;
+    }
+
+    public static String getNameofDoctor(String JSONResponse) throws JSONException {
+
+        JSONObject actualJSON = getActualPrescription(JSONResponse);
+
+        JSONObject patient_id = new JSONObject(actualJSON.getString(PRESCRIPTION));
+        String doctorName = patient_id.getString(DOCTORNAME);
+        System.out.println(doctorName);
+
+        return doctorName;
     }
 }
