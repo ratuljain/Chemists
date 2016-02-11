@@ -4,7 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -184,4 +188,29 @@ public class JSON {
 
         return doctorName;
     }
+
+    public static Date getDateofPrescription(String JSONResponse) throws JSONException, ParseException {
+
+        JSONObject actualJSON = getActualPrescription(JSONResponse);
+
+//			JSONObject patient_id = new JSONObject(actualJSON.getString(PRESCRIPTION));
+        String date = actualJSON.getString("timestamp");
+//			System.out.println(date);
+
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date result1 = df1.parse(date);
+
+        return result1;
+    }
+
+    public static String getIDofPrescription(String JSONResponse) throws JSONException {
+
+        JSONObject actualJSON = getActualPrescription(JSONResponse);
+
+        JSONObject patient_id = new JSONObject(actualJSON.getString(PRESCRIPTION));
+        String prescriptionID = Integer.toString(patient_id.getInt("prescription_id"));
+
+        return prescriptionID;
+    }
+
 }
