@@ -3,24 +3,21 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dip" >
+    android:padding="5dip">
 
-
-    <!-- Name of Medicine-->
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/docName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rihanna Love the way lie"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
     <!-- Right-end Quantity -->
     <TextView
-        android:id="@+id/quantity"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -29,7 +26,7 @@
         android:layout_marginRight="5dip"
         android:textSize="15dip"
         android:textColor="#10bcc9"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

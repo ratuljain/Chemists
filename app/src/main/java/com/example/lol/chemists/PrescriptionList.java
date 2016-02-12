@@ -2,7 +2,6 @@ package com.example.lol.chemists;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,15 +33,18 @@ public class PrescriptionList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        ArrayList<Prescription> arrayOfPrescriptions = new ArrayList<>();
+        final HashMap<String, Integer> listOfMapNameDate;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final TextInputLayout usernameWrapper = (TextInputLayout) findViewById(R.id.usernameWrapper);
-        usernameWrapper.setHint("Enter Patient's name");
-
         PatientName = (EditText) findViewById(R.id.username);
+        final String s = getIntent().getStringExtra("JSON");
+        Log.v(LOG_TAG, s);
 
         Button buttonOne = (Button) findViewById(R.id.btn);
         buttonOne.setOnClickListener(new Button.OnClickListener() {
@@ -50,11 +52,11 @@ public class PrescriptionList extends AppCompatActivity {
 
                 ArrayList<HashMap<String, Object>> listviewPrescription = new ArrayList<>();
 
-                String name = PatientName.getText().toString();
+//                String name = PatientName.getText().toString();
                 //Do stuff here
                 CallAPI c = new CallAPI();
                 try {
-                    receivedJSONString = c.execute(name).get();
+                    receivedJSONString = c.execute(s).get();
 //                    Log.v(LOG_TAG, receivedJSONString);
                     JSONArray presList = JSON.getListOfAllPrescriptions(receivedJSONString);
                     Log.v(LOG_TAG, Integer.toString(presList.length()));
@@ -62,14 +64,18 @@ public class PrescriptionList extends AppCompatActivity {
                     for (int i = 0; i < presList.length(); i++) {
                         JSONObject prescriptionFromArr = presList.getJSONObject(i);
 
+                        String id = JSON.getIDofPrescription(prescriptionFromArr.toString());
                         HashMap<String, Integer> mapMedQuant = JSON.chemistMedicineListHashMap(presList.getJSONObject(i).toString());
                         String docName = JSON.getNameofDoctor(prescriptionFromArr.toString());
-                        Date presDate = JSON.getDateofPrescription(presList.getJSONObject(i).toString());
-                        Log.v(LOG_TAG, "Doc name - " + docName);
-                        Log.v(LOG_TAG, "Pres date - " + presDate.toString());
+                        Date presDate = JSON.getDateofPrescription(prescriptionFromArr.toString());
+
+//                        Log.v(LOG_TAG, "Pres id- " + id);
+//                        Log.v(LOG_TAG, "Doc name - " + docName);
+//                        Log.v(LOG_TAG, "Pres date - " + presDate.toString());
 
                         HashMap<String, Object> listHashmap = new HashMap<>();
 
+                        listHashmap.put("presID", id);
                         listHashmap.put("DocName", docName);
                         listHashmap.put("presDate", presDate);
                         listHashmap.put("medQuantity", mapMedQuant);
@@ -85,11 +91,12 @@ public class PrescriptionList extends AppCompatActivity {
 
                     for (HashMap<String, Object> list : listviewPrescription) {
 
+                        String id = (String) list.get("presID");
                         String docName1 = (String) list.get("DocName");
                         Date timestamp = (Date) list.get("presDate");
                         HashMap<String, Integer> mapMedQuant = (HashMap<String, Integer>) list.get("medQuantity");
 
-
+                        Log.v(LOG_TAG, "Pres ID - " + id);
                         Log.v(LOG_TAG, "Doc name - " + docName1);
                         Log.v(LOG_TAG, "Pres date - " + timestamp.toString());
                         Log.v(LOG_TAG, "mapMedQuant size - " + mapMedQuant.size());

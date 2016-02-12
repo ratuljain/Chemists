@@ -29,6 +29,7 @@ public class MainActivityFragment extends Fragment {
 
     String receivedJSONString;
     EditText PatientName;
+    String name;
 
     public MainActivityFragment() {
     }
@@ -48,7 +49,7 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View v) {
 
 
-                String name = PatientName.getText().toString();
+                name = PatientName.getText().toString();
                 //Do stuff here
                 CallAPI c = new CallAPI();
                 try {
@@ -70,7 +71,9 @@ public class MainActivityFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent myIntent = new Intent(getActivity(), PrescriptionList.class);
-//                myIntent.putExtra("JSON", receivedJSONString); //Optional parameters
+                name = PatientName.getText().toString();
+                myIntent.putExtra("JSON", name); //Optional parameters
+                Log.v("MainMethod", name);
                 startActivity(myIntent);
             }
         });

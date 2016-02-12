@@ -207,8 +207,8 @@ public class JSON {
 
         JSONObject actualJSON = getActualPrescription(JSONResponse);
 
-        JSONObject patient_id = new JSONObject(actualJSON.getString(PRESCRIPTION));
-        String prescriptionID = Integer.toString(patient_id.getInt("prescription_id"));
+//        JSONObject patient_id = new JSONObject(actualJSON.getString(PRESCRIPTION));
+        String prescriptionID = Integer.toString(actualJSON.getInt("id"));
 
         return prescriptionID;
     }

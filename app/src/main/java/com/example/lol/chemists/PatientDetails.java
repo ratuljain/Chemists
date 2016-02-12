@@ -42,7 +42,7 @@ public class PatientDetails extends AppCompatActivity {
 
                 arrayOfUsers.add(new Medicine(name, quantity));
 
-                Log.v(LOG_TAG, name + " - " + quantity);
+//                Log.v(LOG_TAG, name + " - " + quantity);
 
             }
 //            list = new ArrayList<>();

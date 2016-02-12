@@ -7,8 +7,8 @@ public class Medicine {
     public String name;
     public String quantity;
 
-    public Medicine(String name, String hometown) {
+    public Medicine(String name, String quantity) {
         this.name = name;
-        this.quantity = hometown;
+        this.quantity = quantity;
     }
 }
