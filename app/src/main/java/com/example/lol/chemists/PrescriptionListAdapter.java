@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -17,16 +18,19 @@ public class PrescriptionListAdapter extends ArrayAdapter<Prescription> {
     private static class ViewHolder {
         TextView docname;
         TextView date;
+        TextView id;
+        TextView mapJson;
+
     }
 
-    public PrescriptionListAdapter(Context context, ArrayList<Prescription> users) {
-        super(context, R.layout.prescription_list_element_layout, users);
+    public PrescriptionListAdapter(Context context, ArrayList<Prescription> prescriptions) {
+        super(context, R.layout.prescription_list_element_layout, prescriptions);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Prescription user = getItem(position);
+        Prescription prescription = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
@@ -35,13 +39,20 @@ public class PrescriptionListAdapter extends ArrayAdapter<Prescription> {
             convertView = inflater.inflate(R.layout.prescription_list_element_layout, parent, false);
             viewHolder.docname = (TextView) convertView.findViewById(R.id.docName);
             viewHolder.date = (TextView) convertView.findViewById(R.id.date);
+            viewHolder.id = (TextView) convertView.findViewById(R.id.presID);
+            viewHolder.mapJson = (TextView) convertView.findViewById(R.id.medListJson);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Populate the data into the template view using the data object
-        viewHolder.docname.setText(user.docname);
-        viewHolder.date.setText(user.date);
+        viewHolder.docname.setText(prescription.docname);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+        viewHolder.date.setText(df.format(prescription.date).toString());
+        viewHolder.id.setText(prescription.id);
+        viewHolder.mapJson.setText(prescription.mapJson);
         // Return the completed view to render on screen
         return convertView;
     }

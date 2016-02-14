@@ -1,5 +1,7 @@
 package com.example.lol.chemists;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class JSON {
@@ -213,4 +216,58 @@ public class JSON {
         return prescriptionID;
     }
 
+    //keys = presID, DocName, presDate, medQuantity
+    public static ArrayList<HashMap<String, Object>> getHashMapforPrescriptionList(String receivedJSONString)
+            throws JSONException, ParseException {
+
+        String LOG_TAG = "PrescriptionListMethod";
+        ArrayList<HashMap<String, Object>> listviewPrescription = new ArrayList<>();
+
+        JSONArray presList = JSON.getListOfAllPrescriptions(receivedJSONString);
+        Log.v(LOG_TAG, Integer.toString(presList.length()));
+
+        for (int i = 0; i < presList.length(); i++) {
+            JSONObject prescriptionFromArr = presList.getJSONObject(i);
+
+            String id = JSON.getIDofPrescription(prescriptionFromArr.toString());
+            HashMap<String, Integer> mapMedQuant = JSON.chemistMedicineListHashMap(presList.getJSONObject(i).toString());
+            String docName = JSON.getNameofDoctor(prescriptionFromArr.toString());
+            Date presDate = JSON.getDateofPrescription(prescriptionFromArr.toString());
+
+            HashMap<String, Object> listHashmap = new HashMap<>();
+
+            listHashmap.put("presID", id);
+            listHashmap.put("DocName", docName);
+            listHashmap.put("presDate", presDate);
+            listHashmap.put("medQuantity", mapMedQuant);
+            listHashmap.put("jsonFile", prescriptionFromArr.toString());
+
+            listviewPrescription.add(listHashmap);
+
+            Log.v(LOG_TAG, "List len - " + listviewPrescription.size());
+        }
+
+        for (HashMap<String, Object> list : listviewPrescription) {
+
+            String id = (String) list.get("presID");
+            String docName1 = (String) list.get("DocName");
+            Date timestamp = (Date) list.get("presDate");
+            HashMap<String, Integer> mapMedQuant = (HashMap<String, Integer>) list.get("medQuantity");
+
+//            Log.v(LOG_TAG, "Pres ID - " + id);
+//            Log.v(LOG_TAG, "Doc name - " + docName1);
+//            Log.v(LOG_TAG, "Pres date - " + timestamp.toString());
+//            Log.v(LOG_TAG, "mapMedQuant size - " + mapMedQuant.size());
+
+            for (Map.Entry<String, Integer> entry : mapMedQuant.entrySet()) {
+                String key = entry.getKey();
+                String value = Integer.toString(entry.getValue());
+                // do stuff
+                Log.v(LOG_TAG, " med - " + key + " - quant - " + value);
+            }
+
+        }
+
+        return listviewPrescription;
+    }
 }

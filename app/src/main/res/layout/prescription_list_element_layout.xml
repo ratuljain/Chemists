@@ -3,19 +3,33 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dip">
+    android:padding="5dip"
+    android:elevation="8dp">
 
+    <ImageView
+        android:id="@+id/presIcon"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_description" />
+
+    <!-- Doctor's name-->
     <TextView
         android:id="@+id/docName"
-        android:layout_width="wrap_content"
+        android:textSize="17sp"
+        android:layout_marginLeft="5dip"
+        android:fontFamily="sans-serif-light"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="15dip"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:text="Dr Sharma"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/presIcon"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:layout_alignParentRight="true" />
 
-
-    <!-- Right-end Quantity -->
+    <!-- date string-->
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
@@ -23,10 +37,40 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:text="10"
+        android:textSize="14sp"
         android:layout_marginRight="5dip"
-        android:textSize="15dip"
+        android:layout_marginTop="5dip"
         android:textColor="#10bcc9"
-        android:textStyle="bold" />
+        android:layout_centerVertical="true"
+        android:minHeight="?android:attr/listPreferredItemHeight" />
+
+    <!-- Hidden JSON-->
+    <TextView
+        android:id="@+id/medListJson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="fill_vertical"
+        android:text="rafdfs"
+        android:layout_below="@id/docName"
+        android:fontFamily="sans-serif-light"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:layout_alignParentRight="true"
+        android:visibility="gone" />
+
+    <!-- Hidden id-->
+    <TextView
+        android:id="@+id/presID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="fill_vertical"
+        android:text="rafdfs"
+        android:layout_below="@id/docName"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:layout_alignParentRight="true"
+        android:visibility="gone" />
+
+
+    <!-- Right-end Quantity -->
 
 
 </RelativeLayout>

@@ -7,6 +7,10 @@
 
     <string name="Submit">Submit</string>
     <string name="prescriptionVIew">Prescription View</string>
+    <string name="diagnosis">Lucy has also experienced symptoms of increased intracranial pressure,
+        such as nausea, vomiting, and mild photophobia. Hence, it is likely that the tumour is a
+        space-occupying lesion, which is exerting the oedema effect and causing the symptoms that
+        Lucy is experiencing.</string>
 
 
 </resources>

@@ -1,16 +1,17 @@
 package com.example.lol.chemists;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,101 +22,101 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-
 
 public class PrescriptionList extends AppCompatActivity {
 
     private final String LOG_TAG = PrescriptionList.class.getSimpleName();
     String receivedJSONString;
-    EditText PatientName;
+    ArrayList<HashMap<String, Object>> mapForList;
+    Toast mtoast;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        ArrayList<Prescription> arrayOfPrescriptions = new ArrayList<>();
-        final HashMap<String, Integer> listOfMapNameDate;
+        ArrayList<Prescription> arrayOfPrescriptions = new ArrayList<>();  // stores objects of prescription class
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PatientName = (EditText) findViewById(R.id.username);
         final String s = getIntent().getStringExtra("JSON");
-        Log.v(LOG_TAG, s);
 
-        Button buttonOne = (Button) findViewById(R.id.btn);
-        buttonOne.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
+        CallAPI c = new CallAPI();
+        try {
+            receivedJSONString = c.execute(s).get();
+            mapForList = JSON.getHashMapforPrescriptionList(receivedJSONString);
+        } catch (Exception ei) {
+            ei.printStackTrace();
+        }
 
-                ArrayList<HashMap<String, Object>> listviewPrescription = new ArrayList<>();
+        for (HashMap<String, Object> maps : mapForList) {
+            String id = (String) maps.get("presID");
+            String docName = (String) maps.get("DocName");
+            Date date = (Date) maps.get("presDate");
+            String mapJson = (String) maps.get("jsonFile");
 
-//                String name = PatientName.getText().toString();
-                //Do stuff here
-                CallAPI c = new CallAPI();
-                try {
-                    receivedJSONString = c.execute(s).get();
-//                    Log.v(LOG_TAG, receivedJSONString);
-                    JSONArray presList = JSON.getListOfAllPrescriptions(receivedJSONString);
-                    Log.v(LOG_TAG, Integer.toString(presList.length()));
+//            HashMap<String, Integer> medQuantityMap = (HashMap<String, Integer>) maps.get("medQuantity");
+//            String mapJson = medQuantityMap.toString();
 
-                    for (int i = 0; i < presList.length(); i++) {
-                        JSONObject prescriptionFromArr = presList.getJSONObject(i);
+            Log.v(LOG_TAG, "Doc name - " + docName);
+            Log.v(LOG_TAG, "Pres date - " + date.toString().substring(0, 10));
 
-                        String id = JSON.getIDofPrescription(prescriptionFromArr.toString());
-                        HashMap<String, Integer> mapMedQuant = JSON.chemistMedicineListHashMap(presList.getJSONObject(i).toString());
-                        String docName = JSON.getNameofDoctor(prescriptionFromArr.toString());
-                        Date presDate = JSON.getDateofPrescription(prescriptionFromArr.toString());
+            arrayOfPrescriptions.add(new Prescription(docName, date, id, mapJson));
+        }
 
-//                        Log.v(LOG_TAG, "Pres id- " + id);
-//                        Log.v(LOG_TAG, "Doc name - " + docName);
-//                        Log.v(LOG_TAG, "Pres date - " + presDate.toString());
 
-                        HashMap<String, Object> listHashmap = new HashMap<>();
+        //Do stuff here
+        // Create the adapter to convert the array to views
+        PrescriptionListAdapter prescriptionViewAdapter = new PrescriptionListAdapter(this, arrayOfPrescriptions);
+        // Attach the adapter to a ListView
+        ListView preslistView = (ListView) findViewById(R.id.listviewprescription);
+        preslistView.setAdapter(prescriptionViewAdapter);
 
-                        listHashmap.put("presID", id);
-                        listHashmap.put("DocName", docName);
-                        listHashmap.put("presDate", presDate);
-                        listHashmap.put("medQuantity", mapMedQuant);
+        preslistView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
 
-                        listviewPrescription.add(listHashmap);
+                HashMap<String, Integer> medQuantityMap = new HashMap<>();
+                TextView temp1 = (TextView) view.findViewById(R.id.medListJson);
+                TextView temp2 = (TextView) view.findViewById(R.id.docName);
 
-                        Log.v(LOG_TAG, "List len - " + listviewPrescription.size());
-                    }
+                String mapJson = temp1.getText().toString();
+                String docName = temp2.getText().toString();
 
-                    Log.v(LOG_TAG, "starts here --------------");
+//                for (HashMap<String, Object> maps : mapForList){
+//                    if(maps.containsKey(idKey)){
+//                        medQuantityMap = (HashMap<String, Integer>) maps.get(idKey);
+//                        mapJson = new JSONObject(medQuantityMap);
+//                    }
+//                    else
+//                        continue;
+//                }
+//                    Toast.cancel();
+//                    Toast.makeText(getApplicationContext(),str + " is pressed " + position,Toast.LENGTH_SHORT).show();
 
-                    Log.v(LOG_TAG, "List len - " + listviewPrescription.size());
 
-                    for (HashMap<String, Object> list : listviewPrescription) {
-
-                        String id = (String) list.get("presID");
-                        String docName1 = (String) list.get("DocName");
-                        Date timestamp = (Date) list.get("presDate");
-                        HashMap<String, Integer> mapMedQuant = (HashMap<String, Integer>) list.get("medQuantity");
-
-                        Log.v(LOG_TAG, "Pres ID - " + id);
-                        Log.v(LOG_TAG, "Doc name - " + docName1);
-                        Log.v(LOG_TAG, "Pres date - " + timestamp.toString());
-                        Log.v(LOG_TAG, "mapMedQuant size - " + mapMedQuant.size());
-
-                        for (Map.Entry<String, Integer> entry : mapMedQuant.entrySet()) {
-                            String key = entry.getKey();
-                            String value = Integer.toString(entry.getValue());
-                            // do stuff
-                            Log.v(LOG_TAG, " med - " + key + " - quant - " + value);
-                        }
-
-                    }
-
-                } catch (Exception ei) {
-                    ei.printStackTrace();
-                }
+//                showAToast(mapJson + " is pressed " + position);
+                Intent myIntent = new Intent(getApplicationContext(), PatientDetails.class);
+                Bundle extras = new Bundle();
+                extras.putString("mapJSON", mapJson);
+                extras.putString("docName", docName);
+                myIntent.putExtras(extras);
+//                myIntent.putExtra("mapJSON", mapJson); //Optional parameters
+                startActivity(myIntent);
 
             }
         });
+
+    }
+
+    public void showAToast(String message) {
+        if (mtoast != null) {
+            mtoast.cancel();
+        }
+        mtoast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        mtoast.show();
     }
 
     private class CallAPI extends AsyncTask<String, String, String> {

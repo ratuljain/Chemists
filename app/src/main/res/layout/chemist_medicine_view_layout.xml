@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dip" >
+    android:padding="5dip">
+
+    <ImageView
+        android:id="@+id/pillIcon"
+        android:layout_width="24dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/pill24" />
 
 
     <!-- Name of Medicine-->
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/medicineName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rihanna Love the way lie"
-        android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="15dip"
-        android:textStyle="bold"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dip"
+        android:layout_toRightOf="@id/pillIcon"
+        android:fontFamily="sans-serif-light"
+        android:text="Digene M"
+        android:textSize="17dip"
+        android:typeface="sans" />
 
 
     <!-- Right-end Quantity -->
@@ -24,12 +35,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:text="10"
+        android:layout_centerVertical="true"
         android:layout_marginRight="5dip"
-        android:textSize="15dip"
-        android:textColor="#10bcc9"
-        android:textStyle="bold"/>
+        android:layout_marginTop="5dip"
+        android:gravity="center"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:text="17"
+        android:textSize="17sp" />
 
 
 </RelativeLayout>

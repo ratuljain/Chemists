@@ -30,7 +30,7 @@ public class MedicineAdapter extends ArrayAdapter<Medicine> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.chemist_medicine_view_layout, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+            viewHolder.name = (TextView) convertView.findViewById(R.id.medicineName);
             viewHolder.quantity = (TextView) convertView.findViewById(R.id.quantity);
             convertView.setTag(viewHolder);
         } else {
