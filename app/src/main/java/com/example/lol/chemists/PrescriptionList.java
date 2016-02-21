@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lol.chemists.adapter.PrescriptionListAdapter;
+import com.example.lol.chemists.model.Prescription;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,17 +87,6 @@ public class PrescriptionList extends AppCompatActivity {
 
                 String mapJson = temp1.getText().toString();
                 String docName = temp2.getText().toString();
-
-//                for (HashMap<String, Object> maps : mapForList){
-//                    if(maps.containsKey(idKey)){
-//                        medQuantityMap = (HashMap<String, Integer>) maps.get(idKey);
-//                        mapJson = new JSONObject(medQuantityMap);
-//                    }
-//                    else
-//                        continue;
-//                }
-//                    Toast.cancel();
-//                    Toast.makeText(getApplicationContext(),str + " is pressed " + position,Toast.LENGTH_SHORT).show();
 
 
 //                showAToast(mapJson + " is pressed " + position);

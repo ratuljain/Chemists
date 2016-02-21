@@ -43,28 +43,6 @@ public class MainActivityFragment extends Fragment {
 
         PatientName = (EditText) rootView.findViewById(R.id.username);
 
-//        Button buttonOne = (Button) rootView.findViewById(R.id.btn);
-//        buttonOne.setOnClickListener(new Button.OnClickListener() {
-//            public void onClick(View v) {
-//
-//
-//                name = PatientName.getText().toString();
-//                //Do stuff here
-//                CallAPI c = new CallAPI();
-//                try {
-//                    receivedJSONString = c.execute(name).get();
-//                    Log.v("MainMethod", receivedJSONString);
-//                }
-//                catch (ExecutionException | InterruptedException ei) {
-//                    ei.printStackTrace();
-//                }
-//                Intent myIntent = new Intent(getActivity(), PatientDetails.class);
-////                ArrayList<Integer> a = new ArrayList<Integer>();
-//                myIntent.putExtra("JSON", receivedJSONString); //Optional parameters
-//                startActivity(myIntent);
-//            }
-//        });
-
         Button prescriptionView = (Button) rootView.findViewById(R.id.prescriptionView);
         prescriptionView.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -173,13 +151,6 @@ public class MainActivityFragment extends Fragment {
             return patientDetails;
 
         }
-
-//        @Override
-//        protected void onPostExecute(String s) {
-//            Toast.makeText(getActivity(), s,
-//                    Toast.LENGTH_LONG).show();
-//        }
-
 
     }
 

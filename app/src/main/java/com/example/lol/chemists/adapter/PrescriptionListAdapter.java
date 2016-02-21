@@ -1,4 +1,4 @@
-package com.example.lol.chemists;
+package com.example.lol.chemists.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.lol.chemists.model.Prescription;
+import com.example.lol.chemists.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

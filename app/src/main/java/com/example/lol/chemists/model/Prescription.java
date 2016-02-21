@@ -1,4 +1,4 @@
-package com.example.lol.chemists;
+package com.example.lol.chemists.model;
 
 import java.util.Date;
 
@@ -17,15 +17,6 @@ public class Prescription {
         this.date = date;
         this.id = id;
         this.mapJson = mapJson;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public int compare(Prescription m1, Prescription m2) {
-        //possibly check for nulls to avoid NullPointerException
-        return m1.getDate().compareTo(m2.getDate());
     }
 
 }

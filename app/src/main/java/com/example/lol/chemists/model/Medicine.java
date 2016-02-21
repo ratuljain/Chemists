@@ -1,4 +1,4 @@
-package com.example.lol.chemists;
+package com.example.lol.chemists.model;
 
 /**
  * Created by lol on 06/02/16.

@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.lol.chemists.adapter.MedicineAdapter;
+import com.example.lol.chemists.model.Medicine;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
