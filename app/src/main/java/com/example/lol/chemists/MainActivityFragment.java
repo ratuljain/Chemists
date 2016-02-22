@@ -41,6 +41,7 @@ public class MainActivityFragment extends Fragment {
         final TextInputLayout usernameWrapper = (TextInputLayout) rootView.findViewById(R.id.usernameWrapper);
         usernameWrapper.setHint("Enter Patient's name");
 
+
         PatientName = (EditText) rootView.findViewById(R.id.username);
 
         Button prescriptionView = (Button) rootView.findViewById(R.id.prescriptionView);

@@ -55,6 +55,13 @@ public class RegistrationIntentService extends IntentService {
             // [END get_token]
             Log.i(TAG, "GCM Registration Token: " + token);
 
+            //Saving retreived token in shared pref
+//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//            SharedPreferences.Editor editor = prefs.edit();
+//
+//            editor.putString("GCM_REG_TOKEN", token);
+//            editor.commit();
+
             // TODO: Implement this method to send any registration to your app's servers.
             sendRegistrationToServer(token);
 
@@ -87,6 +94,16 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+        Log.v("tokenstr", token);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("GCM_REG_TOKEN", token);
+        editor.apply();
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String regToken = settings.getString("GCM_REG_TOKEN", "Reg token not found");
+        Log.v("SharedPrefRetfrom", regToken);
     }
 
     /**
