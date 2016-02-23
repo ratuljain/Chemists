@@ -24,4 +24,17 @@
         sending the fetched token to the server or subscribing to the PubSub topic. Please try
         running the sample again.</string>
 
+    <string-array name="left_drawer_array">
+        <item>Home</item>
+        <item>Sample</item>
+        <item>Help</item>
+        <item>Favorites</item>
+        <item>Settings</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_current_orders">CurrentOrders</string>
+
 </resources>
