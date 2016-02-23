@@ -18,6 +18,8 @@ import com.afollestad.assent.PermissionResultSet;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -83,7 +85,9 @@ public class MainActivity extends AssentActivity {
         mapRegToken.put("device_id", devID);
         mapRegToken.put("registrationToken", regToken);
 
-        Log.v("SharedPrefReturnedVal", mapRegToken.toString());
+        new JSONObject(mapRegToken).toString();
+
+        Log.v("SharedPrefReturnedVal", new JSONObject(mapRegToken).toString());
     }
 
     private boolean checkPlayServices() {
